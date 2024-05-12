@@ -8,13 +8,15 @@ import {
   serial,
   timestamp,
   varchar,
+  text,
 } from "drizzle-orm/pg-core";
 
 export const createTable = pgTableCreator((name) => `screenplay-tool_${name}`);
 
-export const screenplays = createTable("screenplays", {
-  screenplay_id: serial("screenplay_id").primaryKey(),
-  name: varchar("name", { length: 256 }),
+export const projects = createTable("projects", {
+  project_id: serial("project_id").primaryKey(),
+  project_name: varchar("project_name", { length: 256 }),
+  project_description: text("project_description"),
   created_at: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
