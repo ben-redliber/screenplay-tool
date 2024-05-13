@@ -1,4 +1,5 @@
 import Link from "next/link";
+import DashboardCard from "~/components/dashboard/DashboardCard";
 import IconPlusSquareFill from "~/components/svg/IconPlusSquareFill";
 import { Button } from "~/components/ui/Button";
 import {
@@ -10,10 +11,20 @@ import {
   CardDescription,
 } from "~/components/ui/card";
 import { getProjects } from "~/server/queries";
+
+type Project = {
+  project_id: number;
+  project_name: string | null;
+  project_description: string | null;
+  created_at: Date;
+  updated_at: Date;
+  user_id: string | null;
+};
+
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
-  const projects = await getProjects();
+  const projects: Project[] = await getProjects();
   return (
     <main className="flex min-h-screen flex-col bg-zinc-950 px-12 py-12 text-white">
       <div className="container flex flex-col justify-center gap-6 ">
@@ -28,22 +39,23 @@ export default async function DashboardPage() {
         </div>
         <div id="projects-section" className="flex flex-wrap gap-4">
           {projects.map(
-            ({ project_name, project_id, project_description, created_at }) => (
-              <Link href={`/dashboard/${project_id}`} key={project_id}>
-                <Card className="max-w-72 hover:bg-zinc-200">
-                  <CardHeader>
-                    <CardTitle className="text-2xl tracking-widest">
-                      {project_name}
-                    </CardTitle>
-                    <CardDescription>{project_description}</CardDescription>
-                  </CardHeader>
-                  <CardFooter>
-                    <p className=" text-xs font-thin text-zinc-500/75">
-                      Created {created_at.toLocaleDateString()}
-                    </p>
-                  </CardFooter>
-                </Card>
-              </Link>
+            ({
+              project_id,
+              project_name,
+              project_description,
+              created_at,
+              user_id,
+              updated_at,
+            }: Project) => (
+              <DashboardCard
+                key={project_id}
+                project_id={project_id}
+                project_name={project_name}
+                project_description={project_description}
+                created_at={created_at}
+                updated_at={updated_at}
+                user_id={user_id}
+              />
             ),
           )}
         </div>

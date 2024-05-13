@@ -11,20 +11,32 @@ export default function ProjectLayout({
   children: React.ReactNode;
 }) {
   const contents = [
-    { name: "HOME", href: "/" },
-    { name: "FEATURES", href: "/" },
-    { name: "DOCS", href: "/" },
+    { name: "Home", href: "/", replace: true },
+    { name: "Features", href: "/", replace: true },
+    { name: "Docs", href: "/", replace: true },
   ];
   return (
     <div>
       <div className="border-b-[0.5px] border-b-zinc-50/30 bg-gradient-to-bl from-zinc-800 to-black">
         <nav className="hidden flex-col justify-between gap-6  p-1 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           <div className="flex flex-row justify-center gap-4 text-white">
-            {contents.map(({ name, href }) => (
-              <Link href={`/dashboard${href}`} key={name}>
-                <Button variant="ghost">{name}</Button>
+            <div className="flex flex-row items-center justify-center">
+              <Link href={`/dashboard`}>
+                <Button variant="ghost" className="">
+                  Dashboard
+                </Button>
               </Link>
-            ))}
+              <p className="pl-2">|</p>
+            </div>
+            <div>
+              {contents.map(({ name, href }) => (
+                <Link href={`${href}`} key={name}>
+                  <Button variant="ghost" className="">
+                    {name}
+                  </Button>
+                </Link>
+              ))}
+            </div>
           </div>
         </nav>
       </div>
