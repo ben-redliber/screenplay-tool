@@ -15,14 +15,12 @@ export default async function ProjectPage({
   const { userId } = auth();
   const fdxKey = `${userId}/fdx/${screenplayDetail?.screenplay_r2_key}`;
   const getFdx = await getFdxObject(fdxKey);
-  const stringFdx = JSON.stringify(getFdx);
-  const xmlData = stringFdx.substring(1, stringFdx.length - 1);
 
   const xmlParser = new XMLParser({
     ignoreAttributes: false,
     allowBooleanAttributes: true,
   });
-  const jObj = xmlParser.parse(xmlData) as object;
+  const jObj = xmlParser.parse(getFdx!) as object;
 
   const builder = new XMLBuilder();
   const xmlContent: unknown = builder.build(jObj);
