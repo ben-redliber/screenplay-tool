@@ -17,9 +17,9 @@ export default function DashTopNav() {
   console.log("Current Route -->", currentRoute);
 
   return (
-    <header className="sticky top-0 border-b-[0.5px] border-b-zinc-50/30 bg-gradient-to-bl from-zinc-800 to-black ">
-      <nav className="hidden flex-col justify-between gap-6  p-1 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-        <div className="flex flex-row justify-center gap-4 self-center align-middle text-white">
+    <header className="sticky top-0 border-b-[0.5px] border-b-primary bg-gradient-to-bl from-muted to-background dark:border-b-secondary dark:from-primary dark:to-foreground">
+      <nav className="hidden flex-col justify-between gap-4  p-1 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+        <div className="flex flex-row justify-center gap-4 self-center align-middle">
           {dashContents.map(({ name, href }) => {
             const linkRoute = `/dashboard/${selectedProjectId}${href}`;
 
@@ -29,7 +29,7 @@ export default function DashTopNav() {
             if (linkRoute == currentRoute || currentTab == linkTab) {
               return (
                 <Link
-                  className=" border-b-2 border-b-white"
+                  className=" border-b-2 border-b-primary dark:border-b-secondary"
                   href={linkRoute}
                   key={name}
                 >

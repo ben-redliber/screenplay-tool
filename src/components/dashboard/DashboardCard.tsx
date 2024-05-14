@@ -29,23 +29,21 @@ export default function DashboardCard({
   user_id,
 }: Project) {
   return (
-    <Link href={`/dashboard/${project_id}`}>
-      <Card className="max-w-72 ">
-        <CardHeader>
-          <CardTitle className="text-2xl tracking-widest">
-            {project_name}
-          </CardTitle>
-          <CardDescription>{project_description}</CardDescription>
-        </CardHeader>
-        <CardFooter>
-          <p className="text-xs font-thin text-inherit">
-            Created {created_at.toLocaleDateString()}
-          </p>
-          <p className="text-xs font-thin text-inherit">
-            Last Updated {updated_at.toLocaleDateString()}
-          </p>
-        </CardFooter>
-      </Card>
-    </Link>
+    <Card className="max-w-72 ">
+      <CardHeader>
+        <CardTitle className="text-2xl tracking-widest">
+          <Link href={`/dashboard/${project_id}`}>{project_name}</Link>
+        </CardTitle>
+        <CardDescription>{project_description}</CardDescription>
+      </CardHeader>
+      <CardFooter>
+        <p className="text-xs font-thin text-inherit">
+          Created {created_at.toDateString()}
+        </p>
+        <p className="text-xs font-thin text-inherit">
+          Last Updated {updated_at.toDateString()}
+        </p>
+      </CardFooter>
+    </Card>
   );
 }

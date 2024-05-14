@@ -6,7 +6,7 @@ export default function BodySection({
   children: React.ReactNode;
 }) {
   return (
-    <section id="body-section" className="flex flex-col px-32 pb-8">
+    <section id="body-section" className="flex flex-col px-32 pb-8 pt-4">
       {children}
     </section>
   );

@@ -8,9 +8,9 @@ export default async function ProjectPage({
 }) {
   const projectId = String(params.project);
   const projectDetail = await getUserProject(projectId);
-
+  console.log(projectDetail);
   return (
-    <main className="flex min-h-screen flex-col bg-zinc-950 py-12 text-white">
+    <main className="flex min-h-screen flex-col bg-background py-12 text-white dark:bg-foreground">
       <TitleSection
         title={projectDetail?.project_name}
         description={projectDetail?.project_description}

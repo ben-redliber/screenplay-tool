@@ -46,7 +46,10 @@ export function DataTable<TData, TValue>({
       <Table>
         <TableHeader className="border-0 px-0">
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow className="border-b-zinc-50/25" key={headerGroup.id}>
+            <TableRow
+              className="border-b border-b-secondary/75 dark:border-b-muted-foreground/75"
+              key={headerGroup.id}
+            >
               {headerGroup.headers.map((header) => {
                 return (
                   <TableHead className="border-0 px-1" key={header.id}>
@@ -66,12 +69,12 @@ export function DataTable<TData, TValue>({
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
-                className="border-b border-b-zinc-50/10"
+                className="border-b border-b-secondary/25 dark:border-b-muted-foreground/50"
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell className="border-0 px-1 py-4" key={cell.id}>
+                  <TableCell className="border-0 px-1 py-2" key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}

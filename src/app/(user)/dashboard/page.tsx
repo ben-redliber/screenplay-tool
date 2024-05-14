@@ -26,11 +26,13 @@ export const dynamic = "force-dynamic";
 export default async function DashboardPage() {
   const projects: Project[] = await getProjects();
   return (
-    <main className="flex min-h-screen flex-col bg-zinc-950 px-12 py-12 text-white">
+    <main className="flex min-h-screen flex-col bg-background px-12 py-12 text-white dark:bg-foreground">
       <div className="container flex flex-col justify-center gap-6 ">
         <div id="title-section" className="flex max-w-2xl flex-col gap-0">
-          <p className="text-4xl tracking-widest">DASHBOARD</p>
-          <p className=" text-lg font-thin text-zinc-300">
+          <p className="text-4xl tracking-widest text-primary dark:text-primary-foreground">
+            DASHBOARD
+          </p>
+          <p className=" text-lg font-thin text-secondary dark:text-secondary-foreground">
             Automatically generate script breakdown from your screenplay files.
           </p>
         </div>

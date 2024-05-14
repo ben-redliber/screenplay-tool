@@ -1,7 +1,11 @@
 import "server-only";
+
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { db } from "./db";
-import { and } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
+import { screenplays } from "./db/schema";
+
+import type { ScreenplayInput } from "~/components/dashboard/ScreenplayAdd";
 
 export async function getProjects() {
   const { userId } = auth();
@@ -40,4 +44,13 @@ export async function getSingleScreenplay(screenplayId: string) {
     where: (model, { eq }) => eq(model.screenplay_id, screenplayId),
   });
   return screenplay;
+}
+
+export async function deleteSingleScreenplay(screenplayId: number) {
+  // const { userId } = auth();
+  const deletedScreenplay = await db
+    .delete(screenplays)
+    .where(eq(screenplays.screenplay_id, screenplayId))
+    .returning();
+  return deletedScreenplay;
 }

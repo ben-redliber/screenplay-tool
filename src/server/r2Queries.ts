@@ -1,7 +1,7 @@
-import "server-only";
+// import "server-only";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { db } from "./db";
-import { GetObjectCommand } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { r2 } from "~/lib/r2";
 
 export async function getFdxObject(fdxObjectKey: string) {
@@ -18,6 +18,20 @@ export async function getFdxObject(fdxObjectKey: string) {
 
       return bodyString;
     }
+  } catch (e) {
+    throw e;
+  }
+}
+
+export async function deleteFdxObject(fdxObjectKey: string) {
+  const { userId } = auth();
+  try {
+    const objectCommand = new DeleteObjectCommand({
+      Bucket: process.env.R2_BUCKET_NAME,
+      Key: fdxObjectKey,
+    });
+
+    await r2.send(objectCommand);
   } catch (e) {
     throw e;
   }

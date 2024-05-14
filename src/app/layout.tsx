@@ -4,6 +4,7 @@ import local from "next/font/local";
 
 import { ClerkProvider } from "@clerk/nextjs";
 import TopNav from "~/components/navs/TopNav";
+import { ThemeProvider } from "~/components/providers/theme-provider";
 
 export const viewport = {
   themeColor: "#000000",
@@ -124,7 +125,16 @@ export default function RootLayout({
         lang="en"
         className={`${condensed.variable} ${extended.variable} ${sprat.variable} ${font.className} bg-black`}
       >
-        <body>{children}</body>
+        <body>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </body>
       </html>
     </ClerkProvider>
   );

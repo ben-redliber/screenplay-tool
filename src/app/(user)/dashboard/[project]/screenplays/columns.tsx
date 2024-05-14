@@ -2,12 +2,24 @@
 
 import { type ColumnDef } from "@tanstack/react-table";
 import { Button } from "~/components/ui/Button";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import TableHeaderButton from "~/components/dashboard/TableHeaderButton";
 import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
+import { deleteSingleScreenplay, getSingleScreenplay } from "~/server/queries";
+import { useRouter } from "next/navigation";
+import { deleteFdxObject } from "~/server/r2Queries";
+import { db } from "~/server/db";
+import { screenplays } from "~/server/db/schema";
+import { eq } from "drizzle-orm";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 export type Screenplay = {
   screenplay_id: number;
   screenplay_name: string;
@@ -47,9 +59,9 @@ export const columns: ColumnDef<Screenplay>[] = [
       return (
         <Link
           href={`screenplays/${screenplay_id}`}
-          className="max-w-sm items-start justify-start px-2"
+          className="flex max-w-sm flex-col justify-start px-2 py-1"
         >
-          <p className="text-zinc-10 cursor-pointer tracking-widest hover:text-zinc-300">
+          <p className="h-full cursor-pointer font-semibold text-primary dark:text-primary-foreground">
             {row.getValue("screenplay_name")}
           </p>
         </Link>
@@ -145,4 +157,73 @@ export const columns: ColumnDef<Screenplay>[] = [
       );
     },
   },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const screenplay_id = row.original.screenplay_id;
+      const screenplay_r2_key = row.original.screenplay_r2_key;
+      const project_id = row.original.project_id;
+      const currentRoute = `/dashboard/${project_id}/screenplays`;
+
+      const handleDelete = async () => {
+        const response = await fetch(
+          `/api/r2?key=${screenplay_r2_key}&id=${screenplay_id}&path=${currentRoute}`,
+          {
+            method: "DELETE",
+          },
+        );
+      };
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 cursor-pointer p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4 text-primary dark:text-primary-foreground" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
+            <DropdownMenuItem
+              onClick={() =>
+                navigator.clipboard.writeText(String(screenplay_id))
+              }
+            >
+              Copy Screenplay ID
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              className="text-destructive"
+              onClick={() => handleDelete()}
+            >
+              Delete
+            </DropdownMenuItem>
+            {/* <DeleteButton
+              screenplay_id={screenplay_id}
+              screenplay_r2_key={screenplay_r2_key}
+            /> */}
+            {/* <DropdownMenuItem>View payment details</DropdownMenuItem> */}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
+  },
 ];
+
+// export async function DeleteButton({
+//   screenplay_id,
+//   screenplay_r2_key,
+// }: {
+//   screenplay_id: number;
+//   screenplay_r2_key: string;
+// }) {
+//   const router = useRouter();
+//   return (
+//     <DropdownMenuItem
+//       onClick={async () => await getSingleScreenplay(String(screenplay_id))}
+//       className="text-destructive"
+//     >
+//       Delete
+//     </DropdownMenuItem>
+//   );
+// }
