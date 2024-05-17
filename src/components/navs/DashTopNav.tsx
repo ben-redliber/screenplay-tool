@@ -29,12 +29,12 @@ export default function DashTopNav() {
             if (linkRoute == currentRoute || currentTab == linkTab) {
               return (
                 <Link
-                  className=" border-b-2 border-b-primary dark:border-b-secondary"
+                  className="border-b-2 border-b-primary dark:border-b-secondary"
                   href={linkRoute}
                   key={name}
                 >
                   <Button variant="ghost" className="">
-                    {name}
+                    {name.toUpperCase()}
                   </Button>
                 </Link>
               );
@@ -42,7 +42,7 @@ export default function DashTopNav() {
               return (
                 <Link href={linkRoute} key={name}>
                   <Button variant="ghost" className="">
-                    {name}
+                    {name.toUpperCase()}
                   </Button>
                 </Link>
               );

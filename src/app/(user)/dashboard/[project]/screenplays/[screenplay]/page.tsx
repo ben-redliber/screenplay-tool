@@ -34,7 +34,7 @@ export default async function ProjectPage({
   const collectParagraphs = await collectTexts(paragraphs);
 
   return (
-    <main className="flex min-h-screen flex-col bg-zinc-950 py-12 text-white">
+    <main className="flex min-h-screen flex-col bg-background py-12 text-white dark:bg-foreground">
       <TitleSection
         title={screenplayDetail?.screenplay_name}
         description={screenplayDetail?.screenplay_description}
@@ -42,12 +42,17 @@ export default async function ProjectPage({
         <></>
       </TitleSection>
       <BodySection>
-        <p className="text-3xl">Paragraphs</p>
+        <p className="text-3xl text-foreground dark:text-background">
+          Paragraphs
+        </p>
         <ScrollArea className="h-[600px] ">
           {/* eslint-disable-next-line */}
           {collectParagraphs.map((paragraph: unknown, idx: number) => {
             return (
-              <div className="py-4 font-mono" key={idx}>
+              <div
+                className="py-4 font-mono text-foreground dark:text-background"
+                key={idx}
+              >
                 <p>{paragraph}</p>
               </div>
             );

@@ -61,7 +61,7 @@ export const columns: ColumnDef<Screenplay>[] = [
           href={`screenplays/${screenplay_id}`}
           className="flex max-w-sm flex-col justify-start px-2 py-1"
         >
-          <p className="h-full cursor-pointer font-semibold text-primary dark:text-primary-foreground">
+          <p className="h-full cursor-pointer font-semibold text-primary hover:underline dark:text-primary-foreground">
             {row.getValue("screenplay_name")}
           </p>
         </Link>
@@ -198,32 +198,9 @@ export const columns: ColumnDef<Screenplay>[] = [
             >
               Delete
             </DropdownMenuItem>
-            {/* <DeleteButton
-              screenplay_id={screenplay_id}
-              screenplay_r2_key={screenplay_r2_key}
-            /> */}
-            {/* <DropdownMenuItem>View payment details</DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       );
     },
   },
 ];
-
-// export async function DeleteButton({
-//   screenplay_id,
-//   screenplay_r2_key,
-// }: {
-//   screenplay_id: number;
-//   screenplay_r2_key: string;
-// }) {
-//   const router = useRouter();
-//   return (
-//     <DropdownMenuItem
-//       onClick={async () => await getSingleScreenplay(String(screenplay_id))}
-//       className="text-destructive"
-//     >
-//       Delete
-//     </DropdownMenuItem>
-//   );
-// }

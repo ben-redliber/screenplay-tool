@@ -10,26 +10,22 @@ export default function TopNav() {
   return (
     <header className="sticky top-0 border-b-[0.5px] border-b-primary bg-gradient-to-bl from-muted to-background dark:border-b-secondary dark:from-primary dark:to-foreground">
       <nav className="hidden flex-col justify-between gap-6  p-1 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-        <div className="flex flex-row justify-center gap-4 text-white">
+        <div className="flex flex-row justify-center gap-4 text-primary dark:text-primary-foreground">
           {contents.map(({ name, href }) => (
             <Link href={`/dashboard${href}`} key={name}>
-              <Button variant="ghost" className="tracking-widest">
-                {name}
-              </Button>
+              <Button variant="ghost">{name}</Button>
             </Link>
           ))}
         </div>
         <div className="flex flex-row gap-4 text-white">
           <SignedOut>
             <SignInButton forceRedirectUrl="/dashboard">
-              <Button className="text-black" variant="outline">
-                Sign In
-              </Button>
+              <Button variant="outline">Sign In</Button>
             </SignInButton>
           </SignedOut>
           <SignedIn>
             <Link href="/dashboard">
-              <Button className="border border-zinc-50/30">Dashboard</Button>
+              <Button>Dashboard</Button>
             </Link>
           </SignedIn>
         </div>

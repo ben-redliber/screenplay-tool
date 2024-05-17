@@ -1,5 +1,5 @@
 import "~/styles/globals.css";
-import { DM_Sans } from "next/font/google";
+import { DM_Sans, Inter_Tight } from "next/font/google";
 import local from "next/font/local";
 
 import { ClerkProvider } from "@clerk/nextjs";
@@ -22,6 +22,12 @@ export const metadata = {
 const font = DM_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800", "900"],
+});
+
+const displayFont = Inter_Tight({
+  // subsets: ["latin"],
+  // weight: ["300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-displayz",
 });
 
 const condensed = local({
@@ -123,7 +129,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html
         lang="en"
-        className={`${condensed.variable} ${extended.variable} ${sprat.variable} ${font.className} bg-black`}
+        className={`${condensed.variable} ${extended.variable} ${sprat.variable} ${font.className} ${displayFont.variable} `}
       >
         <body>
           <ThemeProvider

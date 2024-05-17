@@ -31,8 +31,10 @@ export default function DashboardCard({
   return (
     <Card className="max-w-72 ">
       <CardHeader>
-        <CardTitle className="text-2xl tracking-widest">
-          <Link href={`/dashboard/${project_id}`}>{project_name}</Link>
+        <CardTitle className="text-2xl">
+          <Link href={`/dashboard/${project_id}`} className="hover:underline">
+            {project_name}
+          </Link>
         </CardTitle>
         <CardDescription>{project_description}</CardDescription>
       </CardHeader>

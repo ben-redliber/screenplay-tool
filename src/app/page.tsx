@@ -1,21 +1,24 @@
 import Link from "next/link";
+import MainSection from "~/components/dashboard/MainSection";
 import TopNav from "~/components/navs/TopNav";
 
 export default function HomePage() {
   return (
     <>
       <TopNav />
-      <main className="flex min-h-screen flex-col bg-zinc-950 px-16 py-28 text-white">
+      <MainSection>
         <div className="container flex flex-col justify-center gap-12 ">
-          <div className="flex max-w-2xl flex-col gap-4">
-            <p className="text-8xl tracking-widest">SCREENPLAY TOOL</p>
-            <p className="pl-2 text-2xl font-thin text-zinc-300">
+          <div className="flex flex-col gap-4">
+            <p className="font-displayz text-8xl font-black uppercase">
+              Screenplay Tool
+            </p>
+            <p className="pl-2 text-2xl font-thin text-muted-foreground">
               Automatically generate script breakdown from your screenplay
               files.
             </p>
           </div>
         </div>
-      </main>
+      </MainSection>
     </>
   );
 }

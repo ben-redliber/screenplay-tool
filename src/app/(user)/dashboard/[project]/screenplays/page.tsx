@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 import Link from "next/link";
 import BodySection from "~/components/dashboard/BodySection";
+import MainSection from "~/components/dashboard/MainSection";
 import ScreenplaysList from "~/components/dashboard/ScreenplaysList";
 import TitleSection from "~/components/dashboard/TitleSection";
 import { Button } from "~/components/ui/Button";
@@ -15,7 +16,7 @@ export default async function ScreenplaysPage({
   const projectScreenplays = await getScreenplays(projectId);
 
   return (
-    <main className="flex min-h-screen flex-col bg-background py-12 text-white dark:bg-foreground ">
+    <MainSection>
       <TitleSection
         title="Screenplays"
         description="FDX Files associated with the project."
@@ -27,6 +28,6 @@ export default async function ScreenplaysPage({
       <BodySection>
         <ScreenplaysList data={projectScreenplays} />
       </BodySection>
-    </main>
+    </MainSection>
   );
 }
