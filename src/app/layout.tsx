@@ -25,7 +25,7 @@ const font = DM_Sans({
 });
 
 const displayFont = Inter_Tight({
-  // subsets: ["latin"],
+  subsets: ["latin"],
   // weight: ["300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-displayz",
 });
