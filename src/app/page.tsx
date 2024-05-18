@@ -9,7 +9,7 @@ export default function HomePage() {
       <MainSection>
         <div className="container flex flex-col justify-center gap-12 ">
           <div className="flex flex-col gap-4">
-            <p className="font-displayz text-8xl font-black uppercase">
+            <p className="font-displayz text-8xl font-black uppercase text-primary dark:text-primary-foreground">
               Screenplay Tool
             </p>
             <p className="pl-2 text-2xl font-thin text-muted-foreground">

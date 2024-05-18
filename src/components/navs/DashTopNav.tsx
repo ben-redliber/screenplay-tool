@@ -10,6 +10,7 @@ export default function DashTopNav() {
     { name: "Characters", href: "/characters/" },
     { name: "Locations", href: "/locations/" },
     { name: "Scenes", href: "/scenes/" },
+    { name: "Productions", href: "/productions/" },
   ];
 
   const currentRoute = usePathname() + "/";

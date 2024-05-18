@@ -9,7 +9,7 @@ export default async function ProjectPage({
 }) {
   const projectId = String(params.project);
   const projectDetail = await getUserProject(projectId);
-  console.log(projectDetail);
+
   return (
     <MainSection>
       <TitleSection

@@ -42,7 +42,7 @@ export async function DELETE(
   const path = request.nextUrl.searchParams.get("path");
   const objectKey = `${userId}/fdx/${key}`;
 
-  console.log(path);
+  const correctedPath = path?.substr(0, path.length);
 
   try {
     const deleteFromDB = await deleteSingleScreenplay(Number(id));
@@ -51,12 +51,12 @@ export async function DELETE(
       Key: String(objectKey),
     });
     await r2.send(objectCommand);
-    revalidatePath(String(path), "page");
+    revalidatePath(String(correctedPath), "page");
     return new Response(`Deleted ${objectKey}`);
   } catch (e) {
     throw e;
   } finally {
-    revalidatePath(String(path), "page");
+    revalidatePath(String(correctedPath), "page");
     // redirect("/");
   }
 }

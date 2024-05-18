@@ -165,13 +165,16 @@ export const columns: ColumnDef<Screenplay>[] = [
       const project_id = row.original.project_id;
       const currentRoute = `/dashboard/${project_id}/screenplays`;
 
+      // eslint-disable-next-line
+      const router = useRouter();
+
       const handleDelete = async () => {
         const response = await fetch(
           `/api/r2?key=${screenplay_r2_key}&id=${screenplay_id}&path=${currentRoute}`,
           {
             method: "DELETE",
           },
-        );
+        ).then((e) => router.refresh());
       };
 
       return (

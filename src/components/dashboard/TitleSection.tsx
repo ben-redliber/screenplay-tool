@@ -12,9 +12,9 @@ export default function TitleSection({
   return (
     <section
       id="project-title"
-      className="flex flex-row justify-between gap-2 border-b-2 border-b-secondary/25 px-32 pb-10 dark:border-b-muted-foreground/50"
+      className="flex flex-row justify-between gap-2 border-b-2 border-b-secondary/25 px-32 pb-10 pt-10 dark:border-b-muted-foreground/50"
     >
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-2">
         <p className="font-displayz text-6xl font-black uppercase text-primary dark:text-primary-foreground">
           {title}
         </p>

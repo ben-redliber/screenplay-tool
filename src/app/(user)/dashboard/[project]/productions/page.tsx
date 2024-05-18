@@ -23,15 +23,11 @@ export default async function ScreenplaysPage({
     <MainSection>
       <CurrentProject projectName={projectName} />
       <TitleSection
-        title="Screenplays"
-        description="FDX Files associated with the project."
-      >
-        <Link href={`/dashboard/${projectId}/screenplays/add`}>
-          <Button> Add Screenplay </Button>
-        </Link>
-      </TitleSection>
+        title="Productions"
+        description="Production Scheduling and other Directing Needs"
+      ></TitleSection>
       <BodySection>
-        <ScreenplaysList data={projectScreenplays} />
+        <p>Placeholder production</p>
       </BodySection>
     </MainSection>
   );
