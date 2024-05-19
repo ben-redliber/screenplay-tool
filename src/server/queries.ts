@@ -3,9 +3,41 @@ import "server-only";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { db } from "./db";
 import { and, eq } from "drizzle-orm";
-import { screenplays } from "./db/schema";
+import { app_users, projects, screenplays, stp } from "./db/schema";
 
 import type { ScreenplayInput } from "~/components/dashboard/ScreenplayAdd";
+
+const stp_filming = ["INT", "EXT", "I/E", "INT/EXT"];
+const stp_timesOfDay = [
+  "DAY",
+  "NIGHT",
+  "AFTERNOON",
+  "MORNING",
+  "EVENING",
+  "LATER",
+  "MOMENTS LATER",
+  "CONTINUOUS",
+  "THE NEXT DAY",
+  "MAGIC HOUR",
+  "DAWN",
+  "DUSK",
+  "SAME",
+  "SAME TIME",
+];
+const stp_transition = [
+  "CUT TO",
+  "FADE IN",
+  "FADE OUT",
+  "FADE TO",
+  "DISSOLVE TO",
+  "BACK TO",
+  "MATCH CUT TO",
+  "JUMP CUT TO",
+  "FADE TO BLACK",
+  "SMASH CUT TO",
+  "CUT TO BLACK",
+  "TIME CUT",
+];
 
 export async function getProjects() {
   const { userId } = auth();
@@ -59,6 +91,29 @@ export async function checkIfUserExists(user_id: string) {
   const appUsers = await db.query.app_users.findFirst({
     where: (model, { eq }) => eq(model.user_id, user_id),
   });
-
   return appUsers;
+}
+
+export async function addUser(user_id: string) {
+  return await db.insert(app_users).values({ user_id: user_id }).returning();
+}
+
+export async function deleteUser(user_id: string) {
+  return await db.delete(app_users).where(eq(app_users.user_id, user_id));
+}
+
+export async function scaffoldStp(user_id: string) {
+  return await db.insert(stp).values([
+    { stp_category: "filming", stp_content: stp_filming, user_id: user_id },
+    {
+      stp_category: "times_of_day",
+      stp_content: stp_timesOfDay,
+      user_id: user_id,
+    },
+    {
+      stp_category: "transition",
+      stp_content: stp_transition,
+      user_id: user_id,
+    },
+  ]);
 }

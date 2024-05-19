@@ -1,6 +1,3 @@
-// Example model schema from the Drizzle docs
-// https://orm.drizzle.team/docs/sql-schema-declaration
-
 import { sql } from "drizzle-orm";
 import {
   index,
@@ -11,6 +8,7 @@ import {
   integer,
   text,
   pgEnum,
+  primaryKey,
 } from "drizzle-orm/pg-core";
 
 export const createTable = pgTableCreator((name) => `screenplay-tool_${name}`);
@@ -25,7 +23,13 @@ export const projects = createTable("projects", {
   updated_at: timestamp("updated_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  user_id: varchar("user_id", { length: 256 }),
+  user_id: varchar("user_id", { length: 256 }).references(
+    () => app_users.user_id,
+    {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    },
+  ),
 });
 
 export const screenplays = createTable("screenplays", {
@@ -38,7 +42,9 @@ export const screenplays = createTable("screenplays", {
   created_at: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  project_id: integer("project_id").references(() => projects.project_id),
+  project_id: integer("project_id").references(() => projects.project_id, {
+    onDelete: "cascade",
+  }),
 });
 
 export const stp_categories = pgEnum("stp_categories", [
@@ -51,12 +57,18 @@ export const stp = createTable("smart_types", {
   stp_id: serial("stp_id").primaryKey(),
   stp_category: stp_categories("stp_category"),
   stp_content: varchar("stp_content", { length: 256 }).array(),
-  user_id: varchar("user_id", { length: 256 }),
+  user_id: varchar("user_id", { length: 256 }).references(
+    () => app_users.user_id,
+    {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    },
+  ),
 });
 
 export const app_users = createTable("app_users", {
-  app_user_id: serial("app_user_id").primaryKey(),
-  user_id: varchar("user_id", { length: 256 }),
+  app_user_id: serial("app_user_id"),
+  user_id: varchar("user_id", { length: 256 }).primaryKey(),
   created_at: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),

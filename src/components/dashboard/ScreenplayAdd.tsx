@@ -1,4 +1,6 @@
 "use client";
+/* eslint-disable */
+// eslint-disable
 
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -32,7 +34,7 @@ export type ScreenplayInput = Omit<
 export type ScreenplayInputData = Omit<
   Screenplay,
   "screenplay_id" | "created_at"
->;
+> & { eventType?: string };
 
 export default function ScreenplayAdd() {
   const {
@@ -78,6 +80,7 @@ export default function ScreenplayAdd() {
       ...data,
       project_id: Number(project_id),
       screenplay_r2_key: String(useFile?.name),
+      eventType: "screenplay.new",
     };
     const postNewScreenplay = await fetch(`/api/db`, {
       method: "POST",
@@ -103,47 +106,6 @@ export default function ScreenplayAdd() {
   ];
 
   return (
-    // <form onSubmit={handleSubmit(onSubmit)}>
-    //   <div className="flex flex-col gap-6">
-    //     <div className="flex flex-col gap-1">
-    //       <label>Name </label>
-    //       <input {...register("screenplay_name", { required: true })} />
-    //       {errors.screenplay_name && <span>This field is required</span>}
-    //     </div>
-    //     <div className="flex flex-col gap-1">
-    //       <label>Description</label>
-    //       <input {...register("screenplay_description", { required: true })} />
-    //       {errors.screenplay_description && <span>This field is required</span>}
-    //     </div>
-    //     <div className="flex flex-col gap-1">
-    //       <label>Revision</label>
-    //       <input {...register("screenplay_revision", { required: true })} />
-    //       {errors.screenplay_revision && <span>This field is required</span>}
-    //     </div>
-    //     <div className="flex flex-col gap-1">
-    //       <label>Draft</label>
-    //       <input {...register("screenplay_draft", { required: true })} />
-    //       {errors.screenplay_draft && <span>This field is required</span>}
-    //     </div>
-    //     <div className="flex flex-col items-start gap-3">
-    //       <label
-    //         htmlFor="file-upload"
-    //         className="relative flex cursor-pointer flex-col rounded-md"
-    //       >
-    //         <input
-    //           type="file"
-    //           accept=".fdx"
-    //           id="file-upload"
-    //           name="file-upload"
-    //           onChange={handleFileChange}
-    //         />
-    //       </label>
-    //     </div>
-    //     <div>
-    //       <input type="submit" />
-    //     </div>
-    //   </div>
-    // </form>
     <Form {...registerForm}>
       <form
         onSubmit={registerForm.handleSubmit(onSubmit)}

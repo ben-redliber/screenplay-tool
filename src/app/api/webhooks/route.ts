@@ -1,6 +1,14 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
-import { WebhookEvent } from "@clerk/nextjs/server";
+import { WebhookEvent, type UserWebhookEvent } from "@clerk/nextjs/server";
+import {
+  addUser,
+  checkIfUserExists,
+  deleteUser,
+  scaffoldStp,
+} from "~/server/queries";
+import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
@@ -48,12 +56,30 @@ export async function POST(req: Request) {
     });
   }
 
-  // Do something with the payload
-  // For this guide, you simply log the payload to the console
-  const { id } = evt.data;
+  const { id: user_id } = evt.data;
   const eventType = evt.type;
-  console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
-  console.log("Webhook body:", body);
+
+  if (eventType == "user.created") {
+    console.log("Created user w/id", user_id);
+    const userExists = await checkIfUserExists(String(user_id));
+    if (userExists) {
+      console.error("User existed");
+      redirect("/");
+    } else {
+      const addNewUser = await addUser(String(user_id));
+      const scaffoldSmartTypesData = await scaffoldStp(String(user_id));
+      return new Response(
+        `Added user w/id ${user_id} and scaffolded Smart Types`,
+        { status: 200 },
+      );
+    }
+  } else if (eventType == "user.updated") {
+    console.log("Updated user ", user_id, " with data ", body);
+  } else if (eventType == "user.deleted") {
+    console.log(`Deleted ${user_id}`);
+    const deletingUser = await deleteUser(String(user_id));
+    return new Response(`Deleted ${user_id}`, { status: 200 });
+  }
 
   return new Response("", { status: 200 });
 }
