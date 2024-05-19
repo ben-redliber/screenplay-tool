@@ -64,7 +64,7 @@ export default async function ProjectPage({
             <ScrollArea className="h-[500px] max-w-sm">
               {collectParagraphs.map((paragraph: unknown, idx: number) => {
                 return (
-                  <div className="py-4 font-mono " key={idx}>
+                  <div className="py-4 font-mono" key={idx}>
                     <p className="text-foreground dark:text-background">
                       {paragraph}
                     </p>

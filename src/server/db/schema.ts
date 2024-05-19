@@ -10,6 +10,7 @@ import {
   varchar,
   integer,
   text,
+  pgEnum,
 } from "drizzle-orm/pg-core";
 
 export const createTable = pgTableCreator((name) => `screenplay-tool_${name}`);
@@ -38,4 +39,25 @@ export const screenplays = createTable("screenplays", {
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
   project_id: integer("project_id").references(() => projects.project_id),
+});
+
+export const stp_categories = pgEnum("stp_categories", [
+  "transition",
+  "times_of_day",
+  "filming",
+]);
+
+export const stp = createTable("smart_types", {
+  stp_id: serial("stp_id").primaryKey(),
+  stp_category: stp_categories("stp_category"),
+  stp_content: varchar("stp_content", { length: 256 }).array(),
+  user_id: varchar("user_id", { length: 256 }),
+});
+
+export const app_users = createTable("app_users", {
+  app_user_id: serial("app_user_id").primaryKey(),
+  user_id: varchar("user_id", { length: 256 }),
+  created_at: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
 });

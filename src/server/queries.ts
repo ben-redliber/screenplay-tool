@@ -54,3 +54,11 @@ export async function deleteSingleScreenplay(screenplayId: number) {
     .returning();
   return deletedScreenplay;
 }
+
+export async function checkIfUserExists(user_id: string) {
+  const appUsers = await db.query.app_users.findFirst({
+    where: (model, { eq }) => eq(model.user_id, user_id),
+  });
+
+  return appUsers;
+}
