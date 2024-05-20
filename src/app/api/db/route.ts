@@ -1,12 +1,12 @@
 import { auth, type WebhookEvent } from "@clerk/nextjs/server";
 import { type NextRequest, NextResponse } from "next/server";
-import { app_users, screenplays } from "~/server/db/schema";
+import { app_users, projects, screenplays } from "~/server/db/schema";
 import type { ScreenplayInputData } from "~/components/dashboard/ScreenplayAdd";
 import { db } from "~/server/db";
+import { redirect } from "next/navigation";
 
 export async function POST(request: NextRequest) {
   const { userId } = auth();
-  console.log(request);
 
   const data = await request.json();
 
@@ -21,10 +21,19 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       new_id: addScreenplay[0]?.screenplay_id,
     });
-  } else if (data.eventType == "user.created") {
-    console.log(data);
+  } else if (data.eventType == "project.new") {
+    console.log("data-->", data);
+    let finalizedData = { ...data };
+    delete finalizedData.eventType;
 
-    return NextResponse.json(data);
+    const addProject = await db
+      .insert(projects)
+      .values(finalizedData)
+      .returning();
+
+    const newProjectId = addProject[0]?.project_id;
+
+    return NextResponse.json({ new_id: addProject[0]?.project_id });
   } else {
     return NextResponse.json("Nothing done.");
   }

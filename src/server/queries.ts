@@ -6,9 +6,10 @@ import { and, eq } from "drizzle-orm";
 import { app_users, projects, screenplays, stp } from "./db/schema";
 
 import type { ScreenplayInput } from "~/components/dashboard/ScreenplayAdd";
+import { stp_revisionColour } from "~/components/dashboard/ProjectAdd";
 
-const stp_filming = ["INT", "EXT", "I/E", "INT/EXT"];
-const stp_timesOfDay = [
+export const stp_filming = ["INT", "EXT", "I/E", "INT/EXT"];
+export const stp_timesOfDay = [
   "DAY",
   "NIGHT",
   "AFTERNOON",
@@ -24,7 +25,7 @@ const stp_timesOfDay = [
   "SAME",
   "SAME TIME",
 ];
-const stp_transition = [
+export const stp_transition = [
   "CUT TO",
   "FADE IN",
   "FADE OUT",
@@ -115,5 +116,19 @@ export async function scaffoldStp(user_id: string) {
       stp_content: stp_transition,
       user_id: user_id,
     },
+    {
+      stp_category: "revision_colours",
+      stp_content: stp_revisionColour,
+      user_id: user_id,
+    },
   ]);
+}
+
+export async function getUserStp() {
+  const { userId } = auth();
+  const stp = await db.query.stp.findMany({
+    where: (model, { eq }) => eq(model.user_id, userId),
+  });
+  console.log("STP -->", stp);
+  return stp;
 }

@@ -29,7 +29,7 @@ export default function DashboardCard({
   user_id,
 }: Project) {
   return (
-    <Card className="max-w-72 ">
+    <Card className=" w-72">
       <CardHeader>
         <CardTitle className="text-2xl">
           <Link href={`/dashboard/${project_id}`} className="hover:underline">

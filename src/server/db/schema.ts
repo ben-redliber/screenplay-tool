@@ -51,6 +51,7 @@ export const stp_categories = pgEnum("stp_categories", [
   "transition",
   "times_of_day",
   "filming",
+  "revision_colours",
 ]);
 
 export const stp = createTable("smart_types", {

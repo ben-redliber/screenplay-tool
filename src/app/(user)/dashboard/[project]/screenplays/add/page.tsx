@@ -3,8 +3,14 @@ import BodySection from "~/components/dashboard/BodySection";
 import MainSection from "~/components/dashboard/MainSection";
 import ScreenplayAdd from "~/components/dashboard/ScreenplayAdd";
 import TitleSection from "~/components/dashboard/TitleSection";
+import { getUserStp } from "~/server/queries";
 
-export default function ProjectPage() {
+export default async function ProjectPage() {
+  const userStp = await getUserStp();
+  const revisionsColour = userStp.filter(
+    (item) => item.stp_category == "revision_colours",
+  );
+  const stpColour = revisionsColour[0]?.stp_content;
   return (
     <MainSection>
       <TitleSection
@@ -14,7 +20,7 @@ export default function ProjectPage() {
         <></>
       </TitleSection>
       <BodySection>
-        <ScreenplayAdd />
+        <ScreenplayAdd stp={stpColour!} />
       </BodySection>
     </MainSection>
   );

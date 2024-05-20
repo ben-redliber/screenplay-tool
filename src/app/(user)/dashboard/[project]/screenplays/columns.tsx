@@ -96,7 +96,7 @@ export const columns: ColumnDef<Screenplay>[] = [
     header: ({ column }) => {
       return (
         <a
-          className="flex min-w-24 flex-row items-center  px-1"
+          className="flex min-w-24 flex-row items-center px-1"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           <TableHeaderButton data="Revision" />
@@ -106,7 +106,7 @@ export const columns: ColumnDef<Screenplay>[] = [
     cell: ({ row }) => {
       return (
         <div className="min-w-16 px-2">
-          <p className=" text-zinc-400">
+          <p className="text-zinc-400">
             {String(row.getValue("screenplay_revision"))}
           </p>
         </div>

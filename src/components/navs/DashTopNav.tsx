@@ -18,7 +18,7 @@ export default function DashTopNav() {
   console.log("Current Route -->", currentRoute);
 
   return (
-    <header className="sticky top-0 border-b-[0.5px] border-b-primary bg-gradient-to-bl from-muted to-background dark:border-b-secondary dark:from-primary dark:to-foreground">
+    <header className="sticky top-0 z-50 border-b-[0.5px] border-b-primary bg-gradient-to-bl from-muted to-background dark:border-b-secondary dark:from-primary dark:to-foreground">
       <nav className="hidden flex-col justify-between gap-4  p-1 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
         <div className="flex flex-row justify-center gap-4 self-center align-middle">
           {dashContents.map(({ name, href }) => {

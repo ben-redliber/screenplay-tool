@@ -1,8 +1,10 @@
+import { CornerUpLeft } from "lucide-react";
 import Link from "next/link";
 import BodySection from "~/components/dashboard/BodySection";
 import DashboardCard from "~/components/dashboard/DashboardCard";
 import MainSection from "~/components/dashboard/MainSection";
 import TitleSection from "~/components/dashboard/TitleSection";
+import TopNav from "~/components/navs/TopNav";
 import IconPlusSquareFill from "~/components/svg/IconPlusSquareFill";
 import { Button } from "~/components/ui/Button";
 import {
@@ -29,41 +31,46 @@ export const dynamic = "force-dynamic";
 export default async function DashboardPage() {
   const projects: Project[] = await getProjects();
   return (
-    <MainSection>
-      <div className=" flex flex-col justify-center gap-6 ">
-        <TitleSection
-          title={"Dashboard"}
-          description={
-            "Automatically generate script breakdown from your screenplay files."
-          }
-        >
-          <Button>New Project</Button>
-        </TitleSection>
-        <BodySection>
-          <div id="projects-section" className="flex flex-wrap gap-4">
-            {projects.map(
-              ({
-                project_id,
-                project_name,
-                project_description,
-                created_at,
-                user_id,
-                updated_at,
-              }: Project) => (
-                <DashboardCard
-                  key={project_id}
-                  project_id={project_id}
-                  project_name={project_name}
-                  project_description={project_description}
-                  created_at={created_at}
-                  updated_at={updated_at}
-                  user_id={user_id}
-                />
-              ),
-            )}
-          </div>
-        </BodySection>
-      </div>
-    </MainSection>
+    <>
+      <TopNav hasBasicRoutes={false} hasAuth={false} />
+      <MainSection>
+        <div className=" flex flex-col justify-center gap-6 ">
+          <TitleSection
+            title={"Dashboard"}
+            description={
+              "Automatically generate script breakdown from your screenplay files."
+            }
+          >
+            <Link href={`/dashboard/add`}>
+              <Button>New Project</Button>
+            </Link>
+          </TitleSection>
+          <BodySection>
+            <div id="projects-section" className="flex flex-wrap gap-4">
+              {projects.map(
+                ({
+                  project_id,
+                  project_name,
+                  project_description,
+                  created_at,
+                  user_id,
+                  updated_at,
+                }: Project) => (
+                  <DashboardCard
+                    key={project_id}
+                    project_id={project_id}
+                    project_name={project_name}
+                    project_description={project_description}
+                    created_at={created_at}
+                    updated_at={updated_at}
+                    user_id={user_id}
+                  />
+                ),
+              )}
+            </div>
+          </BodySection>
+        </div>
+      </MainSection>
+    </>
   );
 }

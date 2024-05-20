@@ -15,6 +15,5 @@ import {
 import { DataTable } from "../ui/DataTable";
 
 export default function ScreenplaysList({ data }: { data: Screenplay[] }) {
-  console.log(data[0]);
   return <DataTable columns={columns} data={data} />;
 }

@@ -25,6 +25,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
+import { stp_revisionColour } from "./ProjectAdd";
 
 export type ScreenplayInput = Omit<
   Screenplay,
@@ -36,7 +37,7 @@ export type ScreenplayInputData = Omit<
   "screenplay_id" | "created_at"
 > & { eventType?: string };
 
-export default function ScreenplayAdd() {
+export default function ScreenplayAdd({ stp }: { stp: string[] }) {
   const {
     register,
     handleSubmit,
@@ -93,18 +94,6 @@ export default function ScreenplayAdd() {
     router.replace(`/dashboard/${project_id}/screenplays/`);
   };
 
-  const revisionColour: string[] = [
-    "white",
-    "blue",
-    "pink",
-    "yellow",
-    "green",
-    "goldenrod",
-    "buff",
-    "salmon",
-    "cherry",
-  ];
-
   return (
     <Form {...registerForm}>
       <form
@@ -160,7 +149,7 @@ export default function ScreenplayAdd() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {revisionColour.map((rev, idx) => (
+                    {stp.map((rev, idx) => (
                       <SelectItem key={idx} value={rev}>
                         {rev}
                       </SelectItem>
@@ -198,7 +187,7 @@ export default function ScreenplayAdd() {
           name="file-upload"
           type="file"
           onChange={handleFileChange}
-          className="hover:bg-primary-foreground"
+          className=" hover:bg-primary-foreground dark:hover:bg-accent-foreground"
         />
         <Button type="submit">Submit</Button>
       </form>
